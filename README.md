@@ -29,7 +29,7 @@ We recommend installing the first packages with [anaconda](https://www.anaconda.
 
 ## Installation
 Pylians3 can be installed in two different ways:
-1)
+1.)
 ```python
 cd library
 python setup.py build
@@ -40,8 +40,7 @@ Add that folder to your PYTHONPATH in ~/.bashrc
 ```sh
 export PYTHONPATH=$PYTHONPATH:$HOME/Pylians/library/build/lib.linux-x86_64-3.7
 ```
-
-2) 
+2.) 
 ```python
 cd library
 python setup.py install
