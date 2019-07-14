@@ -10,6 +10,12 @@ ext_modules = [
         extra_compile_args=['-O3','-ffast-math','-march=native','-fopenmp'],
               extra_link_args=['-fopenmp'], libraries=['m']),
 
+    Extension("Pk_library.Pk_library", ["Pk_library/Pk_library.pyx"],
+        extra_compile_args = ['-O3','-ffast-math','-march=native','-fopenmp']),
+
+    Extension("Pk_library.bispectrum_library",
+        ["Pk_library/bispectrum_library.pyx"]),
+
     Extension("void_library.void_library", 
               ["void_library/void_library.pyx",
                "void_library/void_openmp_library.c"],
