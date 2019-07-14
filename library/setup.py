@@ -4,6 +4,9 @@ from Cython.Build import cythonize
 from distutils.extension import Extension
 import numpy
 
+# details on installing python packages can be found here
+# https://docs.python.org/3.7/install/
+
 ext_modules = [
     Extension("MAS_library.MAS_library", ["MAS_library/MAS_library.pyx",
                                           "MAS_library/MAS_c.c"],
@@ -26,16 +29,32 @@ ext_modules = [
                "void_library/void_openmp_library.c"],
         extra_compile_args = ['-O3','-ffast-math','-march=native','-fopenmp'],
         extra_link_args=['-fopenmp'], libraries=['m']),
+
+    Extension("integration_library.integration_library",
+              ["integration_library/integration_library.pyx",
+               "integration_library/integration.c",
+               "integration_library/runge_kutta.c"],
+              extra_compile_args=["-O3","-ffast-math","-march=native"]),
+
+    Extension("density_field_library.density_field_library", 
+              ["density_field_library/density_field_library.pyx"]),
+
 ]
 
 
 setup(
-    name = 'Pylians3',
+    name    = 'Pylians3',
+    version = "3.0", 
+    author  = 'Francisco Villaescusa-Navarro',
+    author_email = 'villaescusa.francisco@gmail.com',
     ext_modules = cythonize(ext_modules, 
                             compiler_directives={'language_level' : "3"},
-                            include_path=['MAS_library/','void_library/']),
+                            include_path=['MAS_library/','void_library/',
+                                          'integration_library/']),
     include_dirs=[numpy.get_include()],
     packages=find_packages(),
+    py_modules=['bias_library', 'CAMB_library', 'cosmology_library',
+            ]
     #py_modules=['HOD_library','bias_library','CAMB_library','cosmology_library',
     #'correlation_function_library','halos_library','IM_library',
     #'mass_function_library','readfof','readsnap','readsnap2',
