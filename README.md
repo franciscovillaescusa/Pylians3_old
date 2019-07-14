@@ -31,6 +31,13 @@ We recommend installing the first packages with [anaconda](https://www.anaconda.
 
 ```python
 cd library
+python setup.py install
+```
+
+However, we recommend:
+
+```python
+cd library
 python setup.py build
 ```
 
@@ -41,6 +48,8 @@ Add that folder to your PYTHONPATH in ~/.bashrc
 ```sh
 export PYTHONPATH=$PYTHONPATH:$HOME/Pylians/library/build/lib.linux-x86_64-3.7
 ```
+
+By using the build method you know exactly where the libraries are, so if you want to uninstall Pylians3 just delete build folder.
 
 ## Usage
 
