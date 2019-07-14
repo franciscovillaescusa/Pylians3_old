@@ -28,28 +28,26 @@ Pylians stands for **Py**thon **li**braries for the **a**nalysis of **n**umerica
 We recommend installing the first packages with [anaconda](https://www.anaconda.com/download/?lang=en-us). 
 
 ## Installation
+Pylians3 can be installed in two different ways:
+1)
+```python
+cd library
+python setup.py build
+```
+the compiled libraries and scripts will be located in build/lib.XXX, where XXX depends on your machine. E.g. build/lib.linux-x86_64-3.7 or build/lib.macosx-10.7-x86_64-3.7
 
+Add that folder to your PYTHONPATH in ~/.bashrc
+```sh
+export PYTHONPATH=$PYTHONPATH:$HOME/Pylians/library/build/lib.linux-x86_64-3.7
+```
+
+2) 
 ```python
 cd library
 python setup.py install
 ```
 
-However, we recommend:
-
-```python
-cd library
-python setup.py build
-```
-
-The compiled libraries and scripts are in build/lib.XXX, where XXX depends on your machine. E.g. build/lib.linux-x86_64-3.7 or build/lib.macosx-10.7-x86_64-3.7
-
-Add that folder to your PYTHONPATH in ~/.bashrc
-
-```sh
-export PYTHONPATH=$PYTHONPATH:$HOME/Pylians/library/build/lib.linux-x86_64-3.7
-```
-
-By using the build method you know exactly where the libraries are, so if you want to uninstall Pylians3 just delete build folder.
+We recommend using the first method since you will know exactly where the libraries are. If you want to uninstall Pylians3 and have used the first option, just delete build folder.
 
 ## Usage
 
