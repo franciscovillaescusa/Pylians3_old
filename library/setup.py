@@ -19,6 +19,9 @@ ext_modules = [
     Extension("Pk_library.bispectrum_library",
         ["Pk_library/bispectrum_library.pyx"]),
 
+    Extension("redshift_space_library.redshift_space_library", 
+              ["redshift_space_library/redshift_space_library.pyx"]),
+
     Extension("smoothing_library.smoothing_library",
               ["smoothing_library/smoothing_library.pyx"],
         extra_compile_args = ['-O3','-ffast-math','-march=native','-fopenmp'],
@@ -39,6 +42,11 @@ ext_modules = [
     Extension("density_field_library.density_field_library", 
               ["density_field_library/density_field_library.pyx"]),
 
+    Extension("sorting_library.sorting_library", 
+              ["sorting_library/sorting_library.pyx"],
+              extra_compile_args=['-O3','-ffast-math','-march=native']),
+
+
 ]
 
 
@@ -54,7 +62,7 @@ setup(
     include_dirs=[numpy.get_include()],
     packages=find_packages(),
     py_modules=['bias_library', 'CAMB_library', 'cosmology_library',
-            ]
+                'units_library']
     #py_modules=['HOD_library','bias_library','CAMB_library','cosmology_library',
     #'correlation_function_library','halos_library','IM_library',
     #'mass_function_library','readfof','readsnap','readsnap2',
