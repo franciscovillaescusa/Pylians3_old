@@ -62,13 +62,15 @@ setup(
     include_dirs=[numpy.get_include()],
     packages=find_packages(),
     py_modules=['bias_library', 'CAMB_library', 'cosmology_library',
-                'mass_function_library',
-                'units_library', 'readfof', 'readgadget', 'readsnap2',
-                'readsnap_mpi', 'readsnap', 'readsubf']
+                'halos_library', 'mass_function_library',
+                'plotting_library',
+                'readfof', 'readgadget', 
+                'readsnap', 'readsnap2', 'readsnapHDF5',
+                'readsnap_mpi', 'readsubf', 'routines',
+                'units_library']
     #py_modules=['HOD_library',
-    #'correlation_function_library','halos_library','IM_library',
-    #'readsnapHDF5','routines',
-    #'HI/HI_image_library', 'plotting_library']
+    #'correlation_function_library','IM_library',
+    #'HI/HI_image_library']
 )
 
 
