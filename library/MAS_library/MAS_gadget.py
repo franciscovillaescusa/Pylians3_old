@@ -22,7 +22,7 @@ def density_field_gadget(snapshot_fname, ptypes, dims, MAS='CIC',
 	Omega_m  = head.omega_m
 	Omega_l  = head.omega_l
 	redshift = head.redshift
-        fformat  = head.format
+		fformat  = head.format
 	Hubble   = head.Hubble
 
 
@@ -35,9 +35,9 @@ def density_field_gadget(snapshot_fname, ptypes, dims, MAS='CIC',
 	for i in range(filenum):
 
 		# find the name of the sub-snapshot
-                if filenum==1:       snapshot = snapshot_fname
-                else:                snapshot = snapshot_fname+'.%d'%i
-                if fformat=='hdf5':  snapshot = snapshot+'.hdf5'
+				if filenum==1:       snapshot = snapshot_fname
+				else:                snapshot = snapshot_fname+'.%d'%i
+				if fformat=='hdf5':  snapshot = snapshot+'.hdf5'
 
 		# find the local particles in the sub-snapshot
 		head  = readgadget.header(snapshot)
@@ -49,35 +49,35 @@ def density_field_gadget(snapshot_fname, ptypes, dims, MAS='CIC',
 			if npart[ptype]==0:  continue
 
 			# read positions in Mpc/h
-                        pos = readgadget.read_field(snapshot, "POS ", ptype)/1e3
+						pos = readgadget.read_field(snapshot, "POS ", ptype)/1e3
 			#pos = readsnap.read_block(snapshot,"POS ",parttype=ptype)/1e3
 
 			# read velocities in km/s and move particles to redshift-space
 			if do_RSD:
-                                vel = readgadget.read_field(snapshot, "VEL ", ptype)
+								vel = readgadget.read_field(snapshot, "VEL ", ptype)
 				#vel = readsnap.read_block(snapshot,"VEL ",parttype=ptype)
 				RSL.pos_redshift_space(pos,vel,BoxSize,Hubble,redshift,axis)
 				del vel
 
 			# compute density field. If multicomponent, read/find masses
-                        if Masses[ptype]!=0:
-                                if single_component:
-                                        MASL.MA(pos, density, BoxSize, MAS) 
-                                        num += pos.shape[0]
-                                else:
+						if Masses[ptype]!=0:
+								if single_component:
+										MASL.MA(pos, density, BoxSize, MAS) 
+										num += pos.shape[0]
+								else:
 					mass = np.ones(npart[ptype], dtype=np.float32)*Masses[ptype]
-                                        MASL.MA(pos, density, BoxSize, MAS, W=mass) 
-                                        num += np.sum(mass, dtype=np.float64)
-                        else:
-                                mass = readgadget.read_field(snapshot, "MASS", ptype)*1e10
-                                #mass = readsnap.read_block(snapshot,"MASS",
-                                #        parttype=ptype)*1e10 #Msun/h
-                                MASL.MA(pos, density, BoxSize, MAS, W=mass) 
-                                num += np.sum(mass, dtype=np.float64)
+										MASL.MA(pos, density, BoxSize, MAS, W=mass) 
+										num += np.sum(mass, dtype=np.float64)
+						else:
+								mass = readgadget.read_field(snapshot, "MASS", ptype)*1e10
+								#mass = readsnap.read_block(snapshot,"MASS",
+								#        parttype=ptype)*1e10 #Msun/h
+								MASL.MA(pos, density, BoxSize, MAS, W=mass) 
+								num += np.sum(mass, dtype=np.float64)
 
 	if verbose:
 		print('%.8e should be equal to\n%.8e'\
-                      %(np.sum(density, dtype=np.float64), num))
+					  %(np.sum(density, dtype=np.float64), num))
 		print('Time taken = %.2f seconds'%(time.time()-start))
 
 	return np.asarray(density)
