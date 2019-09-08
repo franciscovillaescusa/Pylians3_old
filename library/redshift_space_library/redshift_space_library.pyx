@@ -26,39 +26,39 @@ from libc.stdlib cimport malloc, free
 @cython.wraparound(False)
 @cython.cdivision(True) 
 cpdef void pos_redshift_space(float[:,::1] pos, float[:,::1] vel,
-                       float BoxSize, float Hubble, float redshift, int axis):
+					   float BoxSize, float Hubble, float redshift, int axis):
 
-    cdef long particles,i
-    cdef float factor
+	cdef long particles,i
+	cdef float factor
 
-    particles = pos.shape[0]
-    factor    = (1.0 + redshift)/Hubble
+	particles = pos.shape[0]
+	factor    = (1.0 + redshift)/Hubble
 
-    for i in range(particles):
-        pos[i,axis] = pos[i,axis] + vel[i,axis]*factor
+	for i in range(particles):
+		pos[i,axis] = pos[i,axis] + vel[i,axis]*factor
 
-        #neutrinos can cross the box multiple times. Use % for the boundary
-        if pos[i,axis]>BoxSize or pos[i,axis]<0.0:
-            pos[i,axis] = (pos[i,axis]+BoxSize)%BoxSize 
+		#neutrinos can cross the box multiple times. Use % for the boundary
+		if pos[i,axis]>BoxSize or pos[i,axis]<0.0:
+			pos[i,axis] = (pos[i,axis]+BoxSize)%BoxSize 
 ###############################################################################
 
 ################################ old routine ##################################
 """
 def pos_redshift_space(pos,vel,BoxSize,Hubble,redshift,axis):
-    #transform coordinates to redshift space
-    delta_y=(vel[:,axis]/Hubble)*(1.0+redshift)  #displacement in Mpc/h
-    pos[:,axis]+=delta_y #add distorsion to position of particle in real-space
-    del delta_y
+	#transform coordinates to redshift space
+	delta_y=(vel[:,axis]/Hubble)*(1.0+redshift)  #displacement in Mpc/h
+	pos[:,axis]+=delta_y #add distorsion to position of particle in real-space
+	del delta_y
 
-    #take care of the boundary conditions
-    #beyond=np.where(pos[:,axis]>BoxSize)[0]; pos[beyond,axis]-=BoxSize
-    #beyond=np.where(pos[:,axis]<0.0)[0];     pos[beyond,axis]+=BoxSize
-    #del beyond
+	#take care of the boundary conditions
+	#beyond=np.where(pos[:,axis]>BoxSize)[0]; pos[beyond,axis]-=BoxSize
+	#beyond=np.where(pos[:,axis]<0.0)[0];     pos[beyond,axis]+=BoxSize
+	#del beyond
 
-    # for neutrinos it could happen that in redshift-space their position
-    # is further than 2 times size of the box, thus instead of doing
-    # pos = pos+BoxSize or pos = pos - BoxSize we can just do pos = pos%BoxSize
-    beyond = np.where((pos[:,axis]>BoxSize) | (pos[:,axis]<0.0))[0]
-    pos[beyond,axis] = np.mod(pos[beyond,axis],BoxSize);  del beyond
+	# for neutrinos it could happen that in redshift-space their position
+	# is further than 2 times size of the box, thus instead of doing
+	# pos = pos+BoxSize or pos = pos - BoxSize we can just do pos = pos%BoxSize
+	beyond = np.where((pos[:,axis]>BoxSize) | (pos[:,axis]<0.0))[0]
+	pos[beyond,axis] = np.mod(pos[beyond,axis],BoxSize);  del beyond
 """
 ###############################################################################
